@@ -50,14 +50,20 @@ type WeatherData struct {
 }
 
 // MakeURL formats the URL for the Open Weather Map API call
-func MakeURL(cityID, units, apiID string) string {
+func MakeURL(cityID, units, apiID string) (string, error) {
+	if apiID == "" {
+		return "", fmt.Errorf("no API Key provided to create url")
+	}
+
 	if cityID == "" {
-		return fmt.Sprintf("https://api.openweathermap.org/data/2.5/weather/?units=%s&appid=%s", units, apiID)
+		return fmt.Sprintf("https://api.openweathermap.org/data/2.5/weather/?units=%s&appid=%s", units, apiID), nil
 	}
+
 	if units == "" {
-		return fmt.Sprintf("https://api.openweathermap.org/data/2.5/weather/?id=%s&appid=%s", cityID, apiID)
+		return fmt.Sprintf("https://api.openweathermap.org/data/2.5/weather/?id=%s&appid=%s", cityID, apiID), nil
 	}
-	return fmt.Sprintf("https://api.openweathermap.org/data/2.5/weather/?id=%s&units=%s&appid=%s", cityID, units, apiID)
+
+	return fmt.Sprintf("https://api.openweathermap.org/data/2.5/weather/?id=%s&units=%s&appid=%s", cityID, units, apiID), nil
 }
 
 // GetData calls the OpenWeatherMap API and adds the date to the struct.

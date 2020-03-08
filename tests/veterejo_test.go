@@ -16,11 +16,11 @@ func TestMakeURL(t *testing.T) {
 		apiID  string
 	}
 	tests := []struct {
-		name string
-		args args
-		want string
+		name    string
+		args    args
+		want    string
+		wantErr bool
 	}{
-		// TODO: Add test cases.
 		{
 			name: "Test with all args",
 			args: args{
@@ -28,7 +28,8 @@ func TestMakeURL(t *testing.T) {
 				units:  "metric",
 				apiID:  "0x0p0q",
 			},
-			want: "https://api.openweathermap.org/data/2.5/weather/?id=0000&units=metric&appid=0x0p0q",
+			want:    "https://api.openweathermap.org/data/2.5/weather/?id=0000&units=metric&appid=0x0p0q",
+			wantErr: false,
 		},
 		{
 			name: "Test without CityID",
@@ -37,21 +38,38 @@ func TestMakeURL(t *testing.T) {
 				units:  "metric",
 				apiID:  "0x0p0q",
 			},
-			want: "https://api.openweathermap.org/data/2.5/weather/?units=metric&appid=0x0p0q",
+			want:    "https://api.openweathermap.org/data/2.5/weather/?units=metric&appid=0x0p0q",
+			wantErr: false,
 		},
 		{
-			name: "Test without unitis",
+			name: "Test without units",
 			args: args{
 				cityID: "0000",
 				units:  "",
 				apiID:  "0x0p0q",
 			},
-			want: "https://api.openweathermap.org/data/2.5/weather/?id=0000&appid=0x0p0q",
+			want:    "https://api.openweathermap.org/data/2.5/weather/?id=0000&appid=0x0p0q",
+			wantErr: false,
+		},
+		{
+			name: "Test without API Key",
+			args: args{
+				cityID: "0000",
+				units:  "imperial",
+				apiID:  "",
+			},
+			want:    "",
+			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := v.MakeURL(tt.args.cityID, tt.args.units, tt.args.apiID); got != tt.want {
+			got, err := v.MakeURL(tt.args.cityID, tt.args.units, tt.args.apiID)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("MakeURL() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if got != tt.want {
 				t.Errorf("MakeURL() = %v, want %v", got, tt.want)
 			}
 		})
@@ -78,7 +96,7 @@ func TestGetData(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name:    "Test with invalid url",
+			name:    "Test with an empty string as the url",
 			url:     fakeURL,
 			wantErr: true,
 		},
