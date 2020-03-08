@@ -49,16 +49,29 @@ type WeatherData struct {
 	Cod      int    `json:"cod"`
 }
 
+// MakeURL formats the URL for the Open Weather Map API call
+func MakeURL(cityID, units, apiID string) string {
+	if cityID == "" {
+		return fmt.Sprintf("https://api.openweathermap.org/data/2.5/weather/?units=%s&appid=%s", units, apiID)
+	}
+	if units == "" {
+		return fmt.Sprintf("https://api.openweathermap.org/data/2.5/weather/?id=%s&appid=%s", cityID, apiID)
+	}
+	return fmt.Sprintf("https://api.openweathermap.org/data/2.5/weather/?id=%s&units=%s&appid=%s", cityID, units, apiID)
+}
+
 // GetData calls the OpenWeatherMap API and adds the date to the struct.
-func (w *WeatherData) GetData(cityID, units, apiID string) error {
-	url := fmt.Sprintf("https://api.openweathermap.org/data/2.5/weather/?id=%s&units=%s&appid=%s", cityID, units, apiID)
+func (w *WeatherData) GetData(url string) error {
 	resp, err := http.Get(url)
 	if err != nil {
 		return err
 	}
 
 	defer resp.Body.Close()
-	json.NewDecoder(resp.Body).Decode(&w)
+	err = json.NewDecoder(resp.Body).Decode(&w)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -95,4 +108,9 @@ func (w *WeatherData) GetHumidity() int {
 // GetCoords returns a string of "lat, long"
 func (w *WeatherData) GetCoords() string {
 	return fmt.Sprintf("%.2f, %.2f", w.Coord.Lat, w.Coord.Lon)
+}
+
+// GetVisibility returns a visiblity meter integer
+func (w *WeatherData) GetVisibility() int {
+	return w.Visibility
 }

@@ -1,10 +1,96 @@
 package veterejo
 
 import (
+	"fmt"
+	"net/http"
+	"net/http/httptest"
 	"testing"
 
 	v "github.com/jrswab/veterejo"
 )
+
+func TestMakeURL(t *testing.T) {
+	type args struct {
+		cityID string
+		units  string
+		apiID  string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		// TODO: Add test cases.
+		{
+			name: "Test with all args",
+			args: args{
+				cityID: "0000",
+				units:  "metric",
+				apiID:  "0x0p0q",
+			},
+			want: "https://api.openweathermap.org/data/2.5/weather/?id=0000&units=metric&appid=0x0p0q",
+		},
+		{
+			name: "Test without CityID",
+			args: args{
+				cityID: "",
+				units:  "metric",
+				apiID:  "0x0p0q",
+			},
+			want: "https://api.openweathermap.org/data/2.5/weather/?units=metric&appid=0x0p0q",
+		},
+		{
+			name: "Test without unitis",
+			args: args{
+				cityID: "0000",
+				units:  "",
+				apiID:  "0x0p0q",
+			},
+			want: "https://api.openweathermap.org/data/2.5/weather/?id=0000&appid=0x0p0q",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := v.MakeURL(tt.args.cityID, tt.args.units, tt.args.apiID); got != tt.want {
+				t.Errorf("MakeURL() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestGetData(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, `{}`)
+	}))
+	defer ts.Close()
+	fakeURL := ""
+
+	tests := []struct {
+		name    string
+		url     string
+		data    *v.WeatherData
+		wantErr bool
+	}{
+		// TODO: Add test cases.
+		{
+			name:    "Test with valid url",
+			url:     ts.URL,
+			wantErr: false,
+		},
+		{
+			name:    "Test with invalid url",
+			url:     fakeURL,
+			wantErr: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := tt.data.GetData(tt.url); (err != nil) != tt.wantErr {
+				t.Errorf("WeatherData.GetData() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+	}
+}
 
 func TestGetMaxTemp(t *testing.T) {
 	tests := []struct {
