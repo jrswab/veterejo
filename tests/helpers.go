@@ -40,7 +40,7 @@ func getImperialTestData() string {
 	return `{
 		"coord": {
 			"lon": -79.96,
-			"lat": 40.56
+			"lat": 50.56
 		},
 		"weather": [
 			{
@@ -86,7 +86,7 @@ func getMetricTestData() string {
 	return `{
 		"coord": {
 			"lon": -79.96,
-			"lat": 40.56
+			"lat": 50.56
 		},
 		"weather": [
 			{

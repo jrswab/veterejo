@@ -61,3 +61,31 @@ func TestGetMinTemp(t *testing.T) {
 		})
 	}
 }
+
+func TestGetCoords(t *testing.T) {
+	tests := []struct {
+		name string
+		data *v.WeatherData
+		want string
+	}{
+		// TODO: Add test cases.
+		{
+			name: "Return coords as string on a correct call to the api (imperial)",
+			data: RunTestServer("imperial"),
+			want: "50.56, -79.96",
+		},
+		{
+			name: "Return coords as string on a correct call to the api (metric)",
+			data: RunTestServer("metric"),
+			want: "50.56, -79.96",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.data.GetCoords()
+			if got != tt.want {
+				t.Errorf("GetCoords() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

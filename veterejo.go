@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-// weatherData holds the information passed back from the OpenWeather API
+// WeatherData holds the information passed back from the OpenWeather API
 type WeatherData struct {
 	Coord struct {
 		Lon float32 `json:"lon"`
@@ -75,4 +75,14 @@ func (w *WeatherData) GetMaxTemp() int {
 // GetMinTemp returns the current high temperature that GetData gets in the call.
 func (w *WeatherData) GetMinTemp() float32 {
 	return w.Main.TempMin
+}
+
+// GetFeelsLike returns the current "feels like" temperature that GetData gets in the call.
+func (w *WeatherData) GetFeelsLike() float32 {
+	return w.Main.FeelsLike
+}
+
+// GetCoords returns a string of "lat, long"
+func (w *WeatherData) GetCoords() string {
+	return fmt.Sprintf("%.2f, %.2f", w.Coord.Lat, w.Coord.Lon)
 }
