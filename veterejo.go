@@ -7,7 +7,7 @@ import (
 )
 
 // weatherData holds the information passed back from the OpenWeather API
-type weatherData struct {
+type WeatherData struct {
 	Coord struct {
 		Lon float64 `json:"lon"`
 		Lat float64 `json:"lat"`
@@ -49,7 +49,7 @@ type weatherData struct {
 	Cod      int    `json:"cod"`
 }
 
-func (w *weatherData) GetData(cityID, units, apiID string) error {
+func (w *WeatherData) GetData(cityID, units, apiID string) error {
 	url := fmt.Sprintf("https://api.openweathermap.org/data/2.5/weather/?id=%s&units=%s&appid=%s", cityID, units, apiID)
 	resp, err := http.Get(url)
 	if err != nil {
@@ -62,6 +62,6 @@ func (w *weatherData) GetData(cityID, units, apiID string) error {
 }
 
 // GetTemp takes the user cityID and API Key to pull the temperature from the OpenWeather API.
-func (w *weatherData) GetTemp() (float64, error) {
+func (w *WeatherData) GetTemp() (float64, error) {
 	return w.Main.Temp, nil
 }
