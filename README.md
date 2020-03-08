@@ -9,7 +9,9 @@ By replacing the **o** of a noun with **ejo** the word discribes a place of that
 1. Get an API Key from (OpenWeatheMap)[https://openweathermap.org]
 2. Import this package
 3. Create a new `WeatherData` struct: `w := new(veterejo.WeatherData)`
-4. Make parse the URL: `url, err := veterejo.MakeURL(yourCityID, unitsOfMeasure, yourApiId)`
+4. Parse the URL: `url, err := veterejo.MakeURL(yourCityID, unitsOfMeasure, yourApiId)`
+   - `yourApiId` is required
+   - The rest may be ommitted if desired.
 5. Call the data: `w.getData(url)`
 6. Use the method for temperature to get the most recent temperature data on OpenWeatherMap
 
