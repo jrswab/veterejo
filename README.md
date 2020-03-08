@@ -11,8 +11,8 @@ By replacing the **o** of a noun with **ejo** the word discribes a place of that
 3. Create a new `WeatherData` struct: `w := new(veterejo.WeatherData)`
 4. Parse the URL: `url, err := veterejo.MakeURL(yourCityID, unitsOfMeasure, yourApiId)`
    - `yourApiId` is required
-   - The rest may be ommitted if desired.
+   - The rest may be omitted if desired.
 5. Call the data: `w.getData(url)`
-6. Use the method for temperature to get the most recent temperature data on OpenWeatherMap
+6. Use the appropriate method to get the most recent data needed from OpenWeatherMap.
 
 *veterejo is licensed under the BSD 3-Clause "New" or "Revised" License*
