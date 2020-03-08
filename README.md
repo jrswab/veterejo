@@ -6,7 +6,7 @@ By replacing the **o** of a noun with **ejo** the word discribes a place of that
 (eg: Computilejo = computer-place or in English a computer lab)
 
 ## Using This Package:
-1. Get an API Key from (OpenWeatheMap)[https://openweathermap.org]
+1. Get an API Key from [OpenWeatheMap](https://openweathermap.org)
 2. Import this package
 3. Create a new `WeatherData` struct: `w := new(veterejo.WeatherData)`
 4. Parse the URL: `url, err := veterejo.MakeURL(yourCityID, unitsOfMeasure, yourApiId)`
