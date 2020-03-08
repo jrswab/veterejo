@@ -62,6 +62,90 @@ func TestGetMinTemp(t *testing.T) {
 	}
 }
 
+func TestGetFeelsLike(t *testing.T) {
+	tests := []struct {
+		name string
+		data *v.WeatherData
+		want float32
+	}{
+		// TODO: Add test cases.
+		{
+			name: "Returns a temperature float on a correct call to the api (imperial)",
+			data: RunTestServer("imperial"),
+			want: 24.13,
+		},
+		{
+			name: "Returns a temperature float on a correct call to the api (metric)",
+			data: RunTestServer("metric"),
+			want: -4.73,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.data.GetFeelsLike()
+			if got != tt.want {
+				t.Errorf("GetMinTemp() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestGetPressure(t *testing.T) {
+	tests := []struct {
+		name string
+		data *v.WeatherData
+		want int
+	}{
+		// TODO: Add test cases.
+		{
+			name: "GetPressure returns integer on a correct call to the api (imperial)",
+			data: RunTestServer("imperial"),
+			want: 1031,
+		},
+		{
+			name: "GetPressure returns integer on a correct call to the api (metric)",
+			data: RunTestServer("metric"),
+			want: 1031,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.data.GetPressure()
+			if got != tt.want {
+				t.Errorf("GetMaxTemp() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestGetHumidity(t *testing.T) {
+	tests := []struct {
+		name string
+		data *v.WeatherData
+		want int
+	}{
+		// TODO: Add test cases.
+		{
+			name: "GetHumidity returns integer on a correct call to the api (imperial)",
+			data: RunTestServer("imperial"),
+			want: 68,
+		},
+		{
+			name: "GetHumidity returns integer on a correct call to the api (metric)",
+			data: RunTestServer("metric"),
+			want: 55,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.data.GetHumidity()
+			if got != tt.want {
+				t.Errorf("GetMaxTemp() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
 func TestGetCoords(t *testing.T) {
 	tests := []struct {
 		name string

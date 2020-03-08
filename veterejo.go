@@ -82,6 +82,16 @@ func (w *WeatherData) GetFeelsLike() float32 {
 	return w.Main.FeelsLike
 }
 
+// GetPressure returns the current pressure that GetData gets in the call.
+func (w *WeatherData) GetPressure() int {
+	return w.Main.Pressure
+}
+
+// GetHumidity returns the current humidity (as a percentage) that GetData gets in the call.
+func (w *WeatherData) GetHumidity() int {
+	return w.Main.Humidity
+}
+
 // GetCoords returns a string of "lat, long"
 func (w *WeatherData) GetCoords() string {
 	return fmt.Sprintf("%.2f, %.2f", w.Coord.Lat, w.Coord.Lon)
