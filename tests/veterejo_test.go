@@ -305,6 +305,7 @@ func TestGetWindSpeed(t *testing.T) {
 		})
 	}
 }
+
 func TestGetCloudCoverage(t *testing.T) {
 	tests := []struct {
 		name string
