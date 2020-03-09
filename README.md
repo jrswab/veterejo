@@ -1,5 +1,5 @@
 # veterejo
-Veterejo is a Go package for querying weathe data from Open Weather Maps.
+Veterejo is a Go package for querying weather data from Open Weather Maps.
 
 Vetero is "weather" in Esperanto and "ejo" is place.
 By replacing the **o** of a noun with **ejo** the word discribes a place of that thing.
