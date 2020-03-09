@@ -60,7 +60,7 @@ func MakeURL(cityID, units, apiID string) (string, error) {
 	}
 
 	if units == "" {
-		return fmt.Sprintf("https://api.openweathermap.org/data/2.5/weather/?id=%s&appid=%s", cityID, apiID), nil
+		return fmt.Sprintf("https://api.openweathermap.org/data/2.5/weather/?id=%s&units=metrics&appid=%s", cityID, apiID), nil
 	}
 
 	return fmt.Sprintf("https://api.openweathermap.org/data/2.5/weather/?id=%s&units=%s&appid=%s", cityID, units, apiID), nil
@@ -119,4 +119,14 @@ func (w *WeatherData) GetCoords() string {
 // GetVisibility returns a visiblity meter integer
 func (w *WeatherData) GetVisibility() int {
 	return w.Visibility
+}
+
+// GetWindSpeed returns the current windspeed of the city.
+func (w *WeatherData) GetWindSpeed() float32 {
+	return w.Wind.Speed
+}
+
+// GetCloudCoverage returns an int as a percentage of cloud coverage
+func (w *WeatherData) GetCloudCoverage() int {
+	return w.Clouds.All
 }

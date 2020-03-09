@@ -277,3 +277,58 @@ func TestGetCoords(t *testing.T) {
 		})
 	}
 }
+
+func TestGetWindSpeed(t *testing.T) {
+	tests := []struct {
+		name string
+		data *v.WeatherData
+		want float32
+	}{
+		// TODO: Add test cases.
+		{
+			name: "return float on a correct call to the api (imperial)",
+			data: RunTestServer("imperial"),
+			want: 3.42,
+		},
+		{
+			name: "return float on a correct call to the api (metric)",
+			data: RunTestServer("metric"),
+			want: 1.5,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.data.GetWindSpeed()
+			if got != tt.want {
+				t.Errorf("GetMinTemp() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+func TestGetCloudCoverage(t *testing.T) {
+	tests := []struct {
+		name string
+		data *v.WeatherData
+		want int
+	}{
+		// TODO: Add test cases.
+		{
+			name: "GetCloudCoverage returns integer on a correct call to the api (imperial)",
+			data: RunTestServer("imperial"),
+			want: 1,
+		},
+		{
+			name: "GetCloudCoverage returns integer on a correct call to the api (metric)",
+			data: RunTestServer("metric"),
+			want: 1,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.data.GetCloudCoverage()
+			if got != tt.want {
+				t.Errorf("GetMaxTemp() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
