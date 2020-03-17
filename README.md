@@ -1,3 +1,4 @@
+[![Go Report Card](https://goreportcard.com/badge/github.com/jrswab/veterejo)](https://goreportcard.com/report/github.com/jrswab/veterejo)
 # veterejo
 Veterejo is a Go package for querying weather data from Open Weather Maps.
 
